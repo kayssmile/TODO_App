@@ -22,20 +22,19 @@
   
   body{
      
-    background:url(./images/bg-desktop-light.jpg);
-   
+    background:url(../images/bg-desktop-light.jpg);  
     background-color: hsl(0, 0%, 98%);
     background-repeat: no-repeat;
-      height: 100vh;
+    height: 100vh;
   /*  Die Body Masse für eine klare Richtlinie innerhalb aller Browser Versionen */
-      padding: 0px;
-      margin: 0px;
+    padding: 0px;
+    margin: 0px;
     
   }
 
 .body__darkmode{
 
-    background:url(./images/bg-desktop-dark.jpg);
+    background:url(../images/bg-desktop-dark.jpg);
     background-color: black;
     background-repeat: no-repeat;
     height: 100vh;
@@ -591,8 +590,9 @@ input[type="text"]{
 @media (max-width: 375px){
 
     body{
-     
-        background:url(./images/bg-mobile-light.jpg);
+
+    // /images/bg-mobile-light.jpg
+        background:url("../images/bg-mobile-light.jpg");
         background-repeat: no-repeat;
         background-size: 375px 300px;
         background-color: hsl(0, 0%, 98%);
@@ -600,7 +600,8 @@ input[type="text"]{
 
     .body__darkmode{
 
-        background:url(./images/bg-mobile-dark.jpg);
+  //    background:url(./images/bg-mobile-dark.jpg);
+        background:url("../images/bg-mobile-dark.jpg");
         background-repeat: no-repeat;
         background-size: 375px 300px;
         background-color: black;

@@ -18,7 +18,7 @@ body {
 }
 
 body {
-  background: url(./images/bg-desktop-light.jpg);
+  background: url(../images/bg-desktop-light.jpg);
   background-color: #fafafa;
   background-repeat: no-repeat;
   height: 100vh;
@@ -28,7 +28,7 @@ body {
 }
 
 .body__darkmode {
-  background: url(./images/bg-desktop-dark.jpg);
+  background: url(../images/bg-desktop-dark.jpg);
   background-color: black;
   background-repeat: no-repeat;
   height: 100vh;
@@ -504,13 +504,13 @@ input[type="text"] {
 
 @media (max-width: 375px) {
   body {
-    background: url(./images/bg-mobile-light.jpg);
+    background: url("../images/bg-mobile-light.jpg");
     background-repeat: no-repeat;
     background-size: 375px 300px;
     background-color: #fafafa;
   }
   .body__darkmode {
-    background: url(./images/bg-mobile-dark.jpg);
+    background: url("../images/bg-mobile-dark.jpg");
     background-repeat: no-repeat;
     background-size: 375px 300px;
     background-color: black;

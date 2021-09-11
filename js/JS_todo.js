@@ -9,7 +9,9 @@
 
 /* Imports  */
 
-import * as Tools from "./modules/Functions.js";
+import * as Tools from "./Functions.js";
+
+import CSS from "../src/styles/stylesheet.scss";
 
 /* DOM Selectors */
 
@@ -25,21 +27,19 @@ var all_entrys_fields = document.querySelectorAll(".list__field");
 
 /* TODO Array */ 
 
-var default_obj = [];
-
- /* [{Entry: "Tutorial Partner Wechselbeziehung aufbauen", State: "Open"},
-                {Entry: "Portfolio", State: "Open"},    
-                {Entry: "Code - Matrix", State: "Open"},
-                {Entry: "News Ticker", State: "Open"}];   */
-                               
+var default_obj = [{Entry: "Tutorial Partner Wechselbeziehung aufbauen", State: "Open", id:"1"},
+                    {Entry: "Aurischen Koerper veraendern", State: "Open", id:"2"},
+                    {Entry: "V2K Artikel schreiben", State: "Open", id:"3"},
+                    {Entry: "Portfolio", State: "Open", id:"4"},    
+                    {Entry: "Code - Matrix", State: "Open", id:"5"},
+                    {Entry: "News Ticker", State: "Open", id:"6"},
+                    {Entry: "GitHub Account ready machen", State: "Open", id:"7"}];
+                    
 var TODOS = [];
 
 /* Local Storage */
 
-
 TODOS = Tools.ChecklocalStorage(TODOS, default_obj);
-
-
 
 /* TODO App */
 
@@ -59,11 +59,14 @@ function TODO_app(TODOS){
 
     /* New todo */ 
 
-    new_todo_input.addEventListener("keyup", event =>{
+    new_todo_input.addEventListener("keyup", async event =>{
 
         if(event.key == "Enter" && new_todo_input.value != ""){
 
-            TODOS.unshift({Entry: new_todo_input.value, State: "Open"});
+            let new_entry = {Entry: new_todo_input.value, State: "Open"};
+            let server_entry = await Tools.settodos_await(new_entry);
+    
+            TODOS.unshift({Entry: server_entry[0].Entry, State: server_entry[0].State, id: server_entry[0].id});
             new_todo_input.value = "";
             Tools.render(TODOS, 0);
 
@@ -78,6 +81,7 @@ function TODO_app(TODOS){
 
         if(event.target.matches(".list__btn--gradient")){
 
+            console.log("hier");
             TODOS = Tools.btnclicked(event, TODOS);
             set = 1;
             Tools.render(TODOS, 0);
@@ -94,6 +98,7 @@ function TODO_app(TODOS){
 
         if((event.target.matches(".list__btn--onclick") || event.target.matches(".list__btn--activ")) && (set == 0)){
 
+            
             TODOS = Tools.btn_origin(event, TODOS);
             set = 1;
             Tools.render(TODOS, 0);
@@ -149,6 +154,8 @@ function TODO_app(TODOS){
 
             if(event.target.innerText == "Clear Completed"){
                 
+                let data = TODOS.filter(todo => (todo.State == "Finished"));
+                Tools.Deletetodos_await(data);
                 TODOS = TODOS.filter(todo => (todo.State == "Open"));
                 Tools.render(TODOS, 0);
 
@@ -189,8 +196,8 @@ const settodos = () => {
 
 
 Tools.getTodos_fetch(settodos, TODO_app(TODOS));
-*/
 
+*/
 
 
 

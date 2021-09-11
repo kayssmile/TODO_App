@@ -3,56 +3,28 @@ async function getodos_await(){
 
     try{
 
-        const response =  await fetch("http://localhost:3002/todos");
+        const response =  await fetch("http://localhost:3000/getsql_todosapp");
         
-/*  Content download *Status anzeige*
-        const reader = response.body.getReader();
-        // Step 2: get total length
-        const contentLength = response.headers.get('Content-Length');
-        console.log(reader);
-        console.log(contentLength);
+        if(response.status == 200){
 
-        // Step 3: read the data
-        let receivedLength = 0; // received that many bytes at the moment
-        let chunks = []; // array of received binary chunks (comprises the body)
-        while(true) {
+            return await response.json(); 
 
-        const {done, value} = await reader.read();
-        
-        if (done) {
-            break;
-        }
-        chunks.push(value);
-        console.log(value);
-        receivedLength += value.length;
-
-        console.log(`Received ${receivedLength} of ${contentLength}`)
-
-        }
-
-        */
-        if(response.ok){
-
-            return  await response.json(); 
         }
         else{
             console.log("booee");
         }
-        
     }
     catch (error){
-
         console.log(`ServerProblem: ${error}`);
-
         return 0;
     }
 }
 
-async function settodos_await(data){
-
+async function Deletetodos_await(data){
+    
     try{
-        const response = await fetch("http://localhost:3002/todos",{
-                        method: "POST",
+        const response = await fetch("http://localhost:3000/deletesql_todosapp",{
+                        method: "DELETE",
                         headers: {
                                  "Content-Type": "application/json",
                         },
@@ -66,6 +38,44 @@ async function settodos_await(data){
 
 }
 
+async function updatetodos_await(data){
+    
+    try{
+        const response = await fetch("http://localhost:3000/updatesql_todosapp",{
+                        method: "PUT",
+                        headers: {
+                                 "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(data),
+                    })
+        return await response.json();            
+    }
+    catch (error){
+        console.log(error);
+    }
+
+}
+
+async function settodos_await(data){
+    
+    try{
+        const response = await fetch("http://localhost:3000/newsql_todosapp",{
+                        method: "POST",
+                        headers: {
+                                 "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(data),
+                    })
+        
+        return  await response.json();
+
+    } 
+    catch (error){
+            console.log(error);
+    }
+
+}
+
 function getTodos_fetch(callback, callback1){
 
     fetch("http://localhost:3002/todos")
@@ -74,9 +84,13 @@ function getTodos_fetch(callback, callback1){
         console.log("Eintraege werden abgerufen");
         console.log(response.status);
         if(response.ok){
+
             return response.json();
+
         }else{
+
             throw new Error(response.status);
+
         }
         
     })
@@ -87,12 +101,15 @@ function getTodos_fetch(callback, callback1){
            return callback1;
 
         }
+
         return callback(antwort);
 
     })
     .catch((Error) =>{
+
         console.log(Error);
         return callback1;
+
     })
 
 }
@@ -147,7 +164,6 @@ function getTodos(mycallback){
         if(request.status >= 200 && request.status < 400){
     
             var TODOS = JSON.parse(request.responseText);
-
             return mycallback(TODOS);
             
         }
@@ -339,7 +355,7 @@ function render(TODOS, filter){
 
     let TODOS_local = JSON.stringify(TODOS);
     localStorage.setItem("TODOS", TODOS_local);
-    settodos_await(TODOS);
+  //  settodos_await(TODOS); // Wird beim einlesen eines neuen Eintrages in Datenbank geschrieben 
 
     /*  
     setTodos_fetch(TODOS, () =>{
@@ -352,6 +368,9 @@ function render(TODOS, filter){
 function removeItem(event, TODOS){
 
     let index = event.target.parentNode.getAttribute("data-index");
+    let data = TODOS[index - 1];
+    Deletetodos_await(data);
+
     TODOS.splice(index - 1, 1);
     event.target.parentNode.remove();
 
@@ -424,6 +443,9 @@ function btnclicked(event, TODOS){
 
     let index = event.target.parentNode.parentNode.getAttribute("data-index");
     TODOS[index - 1].State = "Finished";
+    let data = TODOS[index - 1];
+    updatetodos_await(data);
+
     
     event.target.parentNode.classList.remove("list__btn");
     event.target.parentNode.classList.add("list__btn--noborder");
@@ -447,11 +469,14 @@ function btnclicked(event, TODOS){
 function btn_origin(event, TODOS){
 
     const body = document.querySelector("body");
+    
 
     if(event.target.classList.contains("list__btn--onclick")){
-        
+
         let index = event.target.parentNode.parentNode.getAttribute("data-index");
         TODOS[index - 1].State = "Open";
+        let data = TODOS[index - 1];
+        updatetodos_await(data);
 
         event.target.parentNode.parentNode.children[1].children[0].classList.remove("list__text--finished");
         event.target.parentNode.classList.remove("list__btn--noborder");
@@ -474,6 +499,8 @@ function btn_origin(event, TODOS){
         
         let index = event.target.parentNode.parentNode.parentNode.getAttribute("data-index");
         TODOS[index - 1].State = "Open";
+        let data = TODOS[index - 1];
+        updatetodos_await(data);
             
         event.target.parentNode.parentNode.parentNode.children[1].children[0].classList.remove("list__text--finished");
         event.target.parentNode.parentNode.classList.remove("list__btn--noborder");
@@ -501,4 +528,5 @@ function btn_origin(event, TODOS){
 export {mode_change, btnclicked, btn_origin,
         removeItem, render, ChecklocalStorage,
         setTodos, getTodos, reducer, getTodos_fetch,
-        setTodos_fetch, getodos_await, settodos_await};
+        setTodos_fetch, getodos_await, settodos_await,
+        Deletetodos_await};
