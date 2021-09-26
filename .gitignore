@@ -19,7 +19,7 @@ CSS/*.map
 
 # Dependecy Managment 
 
-dist/*
+
 *.config
 *.json
 node_modules/*
