@@ -9,9 +9,11 @@
 
 /* Imports  */
 
+import * as GraphQL from "./GraphQL.js";
 import * as Tools from "./Functions.js";
-
 import CSS from "../src/styles/stylesheet.scss";
+
+
 
 /* DOM Selectors */
 

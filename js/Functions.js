@@ -1,4 +1,7 @@
 
+
+// REST Anbindung
+
 async function getodos_await(){
 
     try{
@@ -75,6 +78,9 @@ async function settodos_await(data){
     }
 
 }
+
+
+// FETCH API Anbindung
 
 function getTodos_fetch(callback, callback1){
 
@@ -154,6 +160,9 @@ function setTodos_fetch(TODOS, callback){
     
 }
 
+
+// XHR API Anbindung
+
 function getTodos(mycallback){
 
     var request = new XMLHttpRequest;
@@ -205,6 +214,9 @@ function setTodos(TODOS, callback){
     request.send(data);
 
 }
+
+
+// Local Storage 
 
 function ChecklocalStorage(TODOS, default_entries){
 
