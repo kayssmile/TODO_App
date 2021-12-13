@@ -9,7 +9,10 @@ const graphQLClient = new GraphQLClient('http://localhost:4000/graphql');
 
 // Query Weather API 
 
+
 var location = "Bern";
+
+
 
 const query = gql`
 
@@ -43,8 +46,25 @@ const query_newtodo = gql`
         newtodo(Entry: "${entry_test}", State: "${entry_test2}")
 
     }
+`
+
+const query_alltodos = gql`
+
+    query{
+        todos{
+            Entry
+            State
+            id
+            created
+        }
+    }
 
 `
-const response_backend = await graphQLClient.request(query_newtodo);
+//const response_backend = await graphQLClient.request(query_alltodos);
 
-console.log(response_backend);
+//console.log(response_backend);
+
+
+
+
+

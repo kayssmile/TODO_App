@@ -1,19 +1,10 @@
-/* TODO Liste  */ 
-
-
-
-//  function origin btnorigin ganz viel event.target --> evtl. mit variablen arbeiten 
-// Haufig wird body __dark mode abgefragt evtl. in eine Funktion verpacken 
-// Wenn ein reload geschieht Modus speichern -< im reload gleicher mode 
-
+/* TODO App  */ 
 
 /* Imports  */
 
 import * as GraphQL from "./GraphQL.js";
 import * as Tools from "./Functions.js";
 import CSS from "../src/styles/stylesheet.scss";
-
-
 
 /* DOM Selectors */
 
@@ -29,13 +20,13 @@ var all_entrys_fields = document.querySelectorAll(".list__field");
 
 /* TODO Array */ 
 
-var default_obj = [{Entry: "Tutorial Partner Wechselbeziehung aufbauen", State: "Open", id:"1"},
-                    {Entry: "Aurischen Koerper veraendern", State: "Open", id:"2"},
-                    {Entry: "V2K Artikel schreiben", State: "Open", id:"3"},
-                    {Entry: "Portfolio", State: "Open", id:"4"},    
-                    {Entry: "Code - Matrix", State: "Open", id:"5"},
-                    {Entry: "News Ticker", State: "Open", id:"6"},
-                    {Entry: "GitHub Account ready machen", State: "Open", id:"7"}];
+var default_obj = [{Entry: "Schlafen", State: "Open", id:"1"},
+                    {Entry: "Essen", State: "Open", id:"2"},
+                    {Entry: "Kochen", State: "Open", id:"3"},
+                    {Entry: "Putzen", State: "Open", id:"4"},    
+                    {Entry: "Einkaufen", State: "Open", id:"5"},
+                    {Entry: "Joggen", State: "Open", id:"6"},
+                    {Entry: "Fitness", State: "Open", id:"7"}];
                     
 var TODOS = [];
 
@@ -62,116 +53,78 @@ function TODO_app(TODOS){
     /* New todo */ 
 
     new_todo_input.addEventListener("keyup", async event =>{
-
         if(event.key == "Enter" && new_todo_input.value != ""){
-
             let new_entry = {Entry: new_todo_input.value, State: "Open"};
-            let server_entry = await Tools.settodos_await(new_entry);
-    
-            TODOS.unshift({Entry: server_entry[0].Entry, State: server_entry[0].State, id: server_entry[0].id});
+           // let server_entry = await Tools.settodos_await(new_entry);
+         //   TODOS.unshift({Entry: server_entry[0].Entry, State: server_entry[0].State, id: server_entry[0].id});
+            TODOS.unshift(new_entry);
             new_todo_input.value = "";
             Tools.render(TODOS, 0);
-
         }
-
     });
 
     function changelist(event){
-
         var items_left = document.querySelectorAll(".Items_left");
         var set = 0;
-
         if(event.target.matches(".list__btn--gradient")){
-
-            console.log("hier");
             TODOS = Tools.btnclicked(event, TODOS);
             set = 1;
             Tools.render(TODOS, 0);
-            
         }
-
         if(event.target.matches(".list__btn--gradientdark")){
-
             TODOS = Tools.btnclicked(event, TODOS);
             set = 1;
             Tools.render(TODOS, 0);
-
         }
-
-        if((event.target.matches(".list__btn--onclick") || event.target.matches(".list__btn--activ")) && (set == 0)){
-
-            
+        if((event.target.matches(".list__btn--onclick") || event.target.matches(".list__btn--activ")) && (set == 0)){   
             TODOS = Tools.btn_origin(event, TODOS);
             set = 1;
             Tools.render(TODOS, 0);
-            
         }
-
         if(event.target.matches(".list__marker")){
-
             TODOS = Tools.removeItem(event, TODOS);
             Tools.render(TODOS, 0);
-
         }
-
         if(event.target.matches(".list__textlast")){
-
             TODOS = TODOS.filter(todo => (todo.State == "Open"));
             Tools.render(TODOS, 0);
-
         }
-
         if(event.target.matches(".list__text-liststatus")){
-
             if(event.target.innerText == "All"){
-
                 Tools.render(TODOS, 0);
                 items_left.innerText = TODOS.length;
-
             }
-
             if(event.target.innerText == "Active"){
-
                 let activ = "Activ";
                 for(let item of items_left){
-
                     item.innerHTML = Tools.reducer(TODOS, "Open");
-                    
                 }
                 Tools.render(TODOS, activ);
-                
             }
-
-            if(event.target.innerText == "Completed"){
-                
+            if(event.target.innerText == "Completed"){   
                 let completed = "Completed";
                 for(let item of items_left){
-
                     item.innerText = Tools.reducer(TODOS, "Finished");
-    
                 }
                 Tools.render(TODOS, completed);
-
             }
-
             if(event.target.innerText == "Clear Completed"){
-                
                 let data = TODOS.filter(todo => (todo.State == "Finished"));
                 Tools.Deletetodos_await(data);
                 TODOS = TODOS.filter(todo => (todo.State == "Open"));
                 Tools.render(TODOS, 0);
-
             }
-
         }
-
         set = 0;
-
     }
-
 } 
 
-/* Serverside read/save async/await */
+TODO_app(TODOS);
+
+
+
+
+/* Serverside read/save async/await 
  
 const todos_server = await Tools.getodos_await();
 if(todos_server != 0){
@@ -184,19 +137,13 @@ if(todos_server != 0){
     }else{
         TODO_app(TODOS);
     }
-
 }
-
-
-
 
 /* Serverside read/save 
 
 const settodos = () => {
     Tools.setTodos_fetch(TODOS, TODO_app);
 };
-
-
 Tools.getTodos_fetch(settodos, TODO_app(TODOS));
 
 */
