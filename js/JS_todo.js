@@ -1,12 +1,13 @@
-/* TODO App  */ 
+/* Todo-App 
+-------------------------------------------------------------- */
+/* Imports 
+-------------------------------------------------------------- */
 
-/* Imports  */
-
-import * as GraphQL from "./GraphQL.js";
 import * as Tools from "./Functions.js";
 import CSS from "../src/styles/stylesheet.scss";
 
-/* DOM Selectors */
+/* DOM Selectors
+-------------------------------------------------------------- */
 
 const mode_sun = document.querySelector(".App_title__sun"); 
 const mode_moon = document.querySelector(".App_title__moon");
@@ -14,44 +15,25 @@ const body = document.querySelector("body");
 const new_todo_inputfield = document.querySelector(".Input__field");
 const list = document.querySelector(".list"); 
 const list_fixed = document.querySelector(".list__fixed");
-
 var new_todo_input = document.querySelector(".Input__input-field");
 var all_entrys_fields = document.querySelectorAll(".list__field");
 
-/* TODO Array */ 
-
-var default_obj = [{Entry: "Schlafen", State: "Open", id:"1"},
-                    {Entry: "Essen", State: "Open", id:"2"},
-                    {Entry: "Kochen", State: "Open", id:"3"},
-                    {Entry: "Putzen", State: "Open", id:"4"},    
-                    {Entry: "Einkaufen", State: "Open", id:"5"},
-                    {Entry: "Joggen", State: "Open", id:"6"},
-                    {Entry: "Fitness", State: "Open", id:"7"}];
+/* Application
+-------------------------------------------------------------- */
                     
 var TODOS = [];
-
-/* Local Storage */
-
-TODOS = Tools.ChecklocalStorage(TODOS, default_obj);
-
-/* TODO App */
+TODOS = Tools.ChecklocalStorage(TODOS);
 
 function TODO_app(TODOS){
 
     Tools.render(TODOS, 0);
-
     /* Dark or Light Mode */ 
-
     mode_moon.addEventListener("click", Tools.mode_change);
     mode_sun.addEventListener("click", Tools.mode_change);
-
     /* List Delegation */ 
-
     list.addEventListener("click", changelist);
     list_fixed.addEventListener("click", changelist);
-
     /* New todo */ 
-
     new_todo_input.addEventListener("keyup", async event =>{
         if(event.key == "Enter" && new_todo_input.value != ""){
             let new_entry = {Entry: new_todo_input.value, State: "Open"};
@@ -121,9 +103,6 @@ function TODO_app(TODOS){
 
 TODO_app(TODOS);
 
-
-
-
 /* Serverside read/save async/await 
  
 const todos_server = await Tools.getodos_await();
@@ -147,9 +126,3 @@ const settodos = () => {
 Tools.getTodos_fetch(settodos, TODO_app(TODOS));
 
 */
-
-
-
-
-
- 

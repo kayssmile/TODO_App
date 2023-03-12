@@ -1,4 +1,7 @@
-/** Globals  **/
+/*  Partials Import  */
+@import "colors";
+
+/* Globals */
 
 * {
     margin: 0;
@@ -45,10 +48,6 @@
         display: inline-block;
     }
 }
-
-/*  Partials Import  */
-
-@import "colors";
 
 /*  Universal Extends  */
 
@@ -399,6 +398,14 @@ input[type="text"]{
         @extend %BasicPosition;
         right: 15px; 
     }
+}
+
+.none{
+    display: none;
+}
+
+.inline{
+    display: inline-block;
 }
 
 /*  Footer */

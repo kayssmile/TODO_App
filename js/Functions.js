@@ -160,7 +160,7 @@ function setTodos(TODOS, callback){
 /* Tools: Functions
 -------------------------------------------------------------- */
 
-function ChecklocalStorage(TODOS, default_entries){
+function ChecklocalStorage(TODOS){
     if(localStorage.getItem("TODOS") && localStorage.getItem("TODOS") != "[]"){
         TODOS = JSON.parse((localStorage.getItem("TODOS")));
     }else{
@@ -190,7 +190,7 @@ function render(TODOS, filter){
     const list = document.querySelector(".list");
     const items_left = document.querySelectorAll(".Items_left"); 
     const body = document.querySelector("body");
-    if(TODOS.length == 0){
+    if(TODOS.length === 0){
         setTimeout(()=>{
             list.innerHTML = `
                 <h2 class="list__empty">Keine Einträge</h2>
@@ -305,13 +305,13 @@ function mode_change(){
         btn_background_input.classList.remove("Input__btn--gradient");
         btn_background_input.classList.add("Input__btn--gradientdark");
         btn_background_all = document.querySelectorAll(".list__btn--gradient");
-        for (let btn_background of btn_background_all){
+        for(let btn_background of btn_background_all){
             btn_background.classList.remove("list__btn--gradient");
             btn_background.classList.add("list__btn--gradientdark");
         }
         new_todo_inputfield.style.backgroundColor = color_night;
         new_todo_input.style.backgroundColor = color_night;
-        for(let entry_field of all_entrys_fields ){
+        for(let entry_field of all_entrys_fields){
             entry_field.style.backgroundColor = color_night;
         }
     }else{
